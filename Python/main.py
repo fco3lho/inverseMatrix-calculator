@@ -1,5 +1,8 @@
 import numpy as np
 import pandas as pd
+import time
+
+start_time = time.time()
 
 x = pd.read_excel(r"FECHAMENTO_MAIS__NEGOCIADAS_5minutos.xls")
 matrix = np.zeros((12,12), dtype = np.float64)
@@ -27,3 +30,5 @@ while(i+12 < 6200):
     print('\n\n')
 
     i += 1
+
+print("--- %s seconds ---" % (time.time() - start_time))
