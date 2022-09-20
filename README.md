@@ -1,12 +1,12 @@
-# Problema proposto
+## Problema proposto
 
 O trabalho proposto na disciplina de Linguagens de Programação baseia-se em escolher duas linguagens de programação para resolver o problema proposto, de coletar dados de uma planilha em forma de matriz 12x12 linha por linha na planilha, e calcular a matriz inversa de cada matriz coletada.
 
-# Critério de escolha das linguagens
+## Critério de escolha das linguagens
 
 Foram escolhidas as linguagens de programação <i>Python</i>, que é uma linguagem popular e de fácil aprendizagem, e <i>C++</i>, que é uma linguagem teoricamente rápida e que me senti mais apto para solucionar o problema proposto.
 
-# Avaliação das linguagens
+## Avaliação das linguagens
 
 ### Python
 <ul>
@@ -24,7 +24,7 @@ Foram escolhidas as linguagens de programação <i>Python</i>, que é uma lingua
   <li><strong>Classe: </strong>Compilado</li>
 </ul>
 
-# Metodologia
+## Metodologia
 
 ### Python
 
@@ -40,6 +40,45 @@ O cálculo completo foi feito de forma manual e braçal, utilizando o <strong><i
 
 <strong>Observação</strong>: Devido a dificuldade que a linguagem propõe, os dados do arquivo <code>.xls</code> foram passados para um arquivo <code>.txt</code> para ser feita a leitura de forma mais fácil e correta.
 
-# Conclusão
+## Conclusão
 
 Comparando as duas linguagem escolhidas, podemos dizer que Python ganhou disparadamente, por sua facilidade e velocidade compara a C++ nesse caso. Em questão de linhas de código, Python ficou com 34 linhas e C++ com 273 linhas, e em questão de tempo, para Python executar todas as 6187 matrizes, gastou em média 24 segundos e para executar uma matriz, C++ gastou 295 segundos, ou seja, fazendo um cálculo básico de tempo e levando em conta a primeira matriz, C++ gastaria cerca de 505 horas ou 21 dias para executar todas as 6187 matrizes.
+
+## Compilação e Execução em C++
+
+Na pasta <code>cplusplus</code>, possui um arquivo <i>Makefile</i> que realiza todo o procedimento de compilação e execução. Abra o diretório da pasta no terminar e siga os comandos abaixo:
+
+<table align="center">
+  <tr>
+    <td><strong>Comando</strong></td>
+    <td><strong>Função</strong></td>
+  </tr>
+  <tr>
+    <td><code>make clean</code></td>
+    <td>Apaga a última compilação realizada contida na pasta build.</td>
+  </tr>
+  <tr>
+    <td><code>make</code></td>
+    <td>Executa a compilação do programa utilizando o g++, e o resultado vai para a pasta build.</td>
+  </tr>
+  <tr>
+    <td><code>make run</code></td>
+    <td>Executa o programa da pasta build após a realização da compilação.</td>
+  </tr>
+</table>
+
+## Execução em Python
+
+Após abrir a pasta <code>python</code> no terminal, siga os passos abaixo para executar o programa.
+
+<table align="center">
+  <tr>
+    <td><strong>Comando</strong></td>
+    <td><strong>Função</strong></td>
+  </tr>
+  <tr>
+    <td><code>python3 main.py</code></td>
+    <td>Irá executar o código escrito em "main.py".</td>
+  </tr>
+</table>
+
