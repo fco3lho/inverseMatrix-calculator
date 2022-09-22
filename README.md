@@ -36,7 +36,7 @@ Inicialmente, foi criada uma variável que recebe a leitura da planilha, uma out
 
 Em C++, para a resolução do problema, foram usadas apenas bibliotecas padrões do C++ para leitura do arquivo.
 
-O cálculo completo foi feito de forma manual, utilizando o <strong><i>método de Gauss-Jordan</i></strong>, e sem a utilização de biblioteca de terceiros onde foi criada apenas uma função, chamada de <code>calculateInverse()</i> para calcular a matriz inversa da matriz que o programa está executando naquele momento.
+O cálculo completo foi feito de forma manual, utilizando o <strong><i>método de Gauss-Jordan</i></strong>, e sem a utilização de biblioteca de terceiros onde foi criada apenas uma função, chamada de <code>calculateInverse()</code> para calcular a matriz inversa da matriz que o programa está executando naquele momento.
 
 <strong>Observação</strong>: Devido a dificuldade que a linguagem propõe, os dados do arquivo <code>.xls</code> foram passados para um arquivo <code>.txt</code> para ser feita a leitura de forma mais fácil e correta.
 
