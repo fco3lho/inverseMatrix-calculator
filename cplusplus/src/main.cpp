@@ -5,78 +5,60 @@
 
 using namespace std;
 
-int GetMinor(float **src, float **dest, int row, int col, int order){
-    int colCount = 0, rowCount = 0;
- 
-    for(int i = 0; i < order; i++ ){
-        if( i != row ){
-            colCount = 0;
-            for(int j = 0; j < order; j++ ){
-                if( j != col ){
-                    dest[rowCount][colCount] = src[i][j];
-                    colCount++;
+//Cálculo da matriz inversa usando o método de Gauss-Jordan
+void calculateInverse(float **matriz, int n){
+    float A[n][n], identidade[n][n], pivot, aux;
+
+    //Copiando matriz
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            A[i][j] = matriz[i][j];
+        }
+    }
+
+    //Criando matriz identidade
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            if(i == j){
+                identidade[i][i] = 1;
+            }
+            else{
+                identidade[i][j] = 0;
+            }
+        }
+    }
+
+    //Calculando matriz inversa
+    for(int i = 0; i < n; i++){
+        pivot = A[i][i];
+
+        for(int k = 0; k < n; k++){
+            A[i][k] = A[i][k]/pivot;
+            identidade[i][k] = identidade[i][k]/pivot;
+        }
+
+        for(int j = 0; j < n; j++){
+            if(i != j){
+                aux = A[j][i];
+
+                for(int k = 0; k < n; k++){
+                    A[j][k] = A[j][k] - aux * A[i][k];
+                    identidade[j][k] = identidade[j][k] - (aux * identidade[i][k]);
                 }
             }
-            rowCount++;
         }
     }
- 
-    return 1;
-}
 
-double CalcDeterminant(float **mat, int order){
-    if( order == 1 ){
-        return mat[0][0];
-    }
-
-    float det = 0;
-
-    float **minor;
-    minor = new float*[order-1];
-
-    for(int i = 0; i < order-1; i++){
-        minor[i] = new float[order-1];
-    }
- 
-    for(int i = 0; i < order; i++ ){
-        GetMinor(mat, minor, 0, i , order);
- 
-        det += (i%2 == 1? -1.0:1.0) * mat[0][i] * CalcDeterminant(minor, order-1);
-    }
- 
-    for(int i = 0; i < order-1; i++){
-        delete [] minor[i];
-    }
-
-    delete [] minor;
- 
-    return det;
-}
-
-void MatrixInversion(float **A, int order, float **Y){
-    double det = 1.0/CalcDeterminant(A,order);
- 
-    float *temp = new float[(order-1)*(order-1)];
-    float **minor = new float*[order-1];
-    
-    for(int i=0;i<order-1;i++){
-        minor[i] = temp+(i*(order-1));
-    }
- 
-    for(int j=0;j<order;j++){
-        for(int i=0;i<order;i++){
-            GetMinor(A,minor,j,i,order);
-            Y[i][j] = det*CalcDeterminant(minor,order-1);
-            
-            if( (i+j)%2 == 1){
-                Y[i][j] = -Y[i][j];
-            }
+    //Impressão da inversa
+    for(int i = 0; i < n; i++){
+        for(int j = 0; j < n; j++){
+            cout << identidade[i][j] << "\t";
         }
+        cout << endl;
     }
- 
-    delete [] temp;
-    delete [] minor;
 }
+
+
 
 int main(){
     clock_t start, end;
@@ -87,43 +69,39 @@ int main(){
     string value;
 
     float **matrixA, **matrixB, **matrixInv;
+    int n = 12;
 
     double StrToDouble;
 
     // Criação matriz A
-
-    matrixA = new float *[12];
-
-    for(int i = 0; i < 12; i++){
-        matrixA[i] = new float[12];
+    matrixA = new float *[n];
+    for(int i = 0; i < n; i++){
+        matrixA[i] = new float[n];
     }
 
     // Criação matriz B
-
-    matrixB = new float *[12];
-
-    for(int i = 0; i < 12; i++){
-        matrixB[i] = new float[12];
+    matrixB = new float *[n];
+    for(int i = 0; i < n; i++){
+        matrixB[i] = new float[n];
     }
 
     // Criação matriz inversa
-
-    matrixInv = new float *[12];
-
-    for(int i = 0; i < 12; i++){
-        matrixInv[i] = new float[12];
+    matrixInv = new float *[n];
+    for(int i = 0; i < n; i++){
+        matrixInv[i] = new float[n];
     }
 
+    //Programa começa a ser executado aqui
     start = clock();
     
     file.open("FECHAMENTO_MAIS__NEGOCIADAS_5minutos.txt");
 
     if(file.is_open()){
-        for(int i = 0; i < 12; i++){
+        for(int i = 0; i < n; i++){
             getline(file, values);
             stringstream check1(values);
 
-            for(int j = 0; j < 13; j++){
+            for(int j = 0; j < n+1; j++){
                 getline(check1, value, '\t');
 
                 if(j >= 1){
@@ -143,23 +121,16 @@ int main(){
 
         cout << endl << "______________________________________________________________________________________________\n\t\t\t\t\tImpressão da matriz principal" << endl << endl;
 
-        for(int line = 0; line < 12; line++){
-            for(int column = 0; column < 12; column++){
+        for(int line = 0; line < n; line++){
+            for(int column = 0; column < n; column++){
                 cout << fixed << setprecision(2) << matrixA[line][column] << "\t";
             }
             cout << endl;
         }
 
-        MatrixInversion(matrixA, 12, matrixInv);
-
         cout << endl << "\n\t\t\tImpressão da matriz inversa da principal" << endl << endl;
 
-        for(int i = 0; i < 12; i++){
-            for(int j = 0; j < 12; j++){
-                cout << matrixInv[i][j] << "\t";
-            }
-            cout << endl;
-        }
+        calculateInverse(matrixA, n);
 
         // Looping começa aqui
 
@@ -168,13 +139,13 @@ int main(){
             stringstream check1(values);
 
             if(i%2 == 0){
-                for(int j = 0; j < 11; j++){
-                    for(int k = 0; k < 12; k++){
+                for(int j = 0; j < n-1; j++){
+                    for(int k = 0; k < n; k++){
                         matrixB[j][k] = matrixA[j+1][k];
                     }
                 }
 
-                for(int k = 0; k < 13; k++){
+                for(int k = 0; k < n+1; k++){
                     getline(check1, value, '\t');
 
                     if(k >= 1){
@@ -187,39 +158,32 @@ int main(){
                         }
 
                         StrToDouble = stod(value);
-                        matrixB[11][k-1] = StrToDouble;
+                        matrixB[n-1][k-1] = StrToDouble;
                     }                 
                 }
 
-                cout << endl << "______________________________________________________________________________________________\n\t\t\t\t\tImpressão da matriz B" << endl << endl;
+                cout << endl << "______________________________________________________________________________________________\n\t\t\t\t\tImpressão da matriz " << i << endl << endl;
 
-                for(int line = 0; line < 12; line++){
-                    for(int column = 0; column < 12; column++){
+                for(int line = 0; line < n; line++){
+                    for(int column = 0; column < n; column++){
                         cout << fixed << setprecision(2) << matrixB[line][column] << "\t";
                     }
                     cout << endl;
                 }
 
-                MatrixInversion(matrixB, 12, matrixInv);
+                cout << endl << "\n\t\t\tImpressão da matriz inversa da matriz " << i << endl << endl;
 
-                cout << endl << "\n\t\t\tImpressão da matriz inversa da matriz B" << endl << endl;
-
-                for(int i = 0; i < 12; i++){
-                    for(int j = 0; j < 12; j++){
-                        cout << matrixInv[i][j] << "\t";
-                    }
-                    cout << endl;
-                }       
+                calculateInverse(matrixB, n);       
             }
 
             else if(i%2 != 0){
-                for(int j = 0; j < 11; j++){
-                    for(int k = 0; k < 12; k++){
+                for(int j = 0; j < n-1; j++){
+                    for(int k = 0; k < n; k++){
                         matrixA[j][k] = matrixB[j+1][k];
                     }
                 }
 
-                for(int k = 0; k < 13; k++){
+                for(int k = 0; k < n+1; k++){
                     getline(check1, value, '\t');
 
                     if(k >= 1){
@@ -232,29 +196,22 @@ int main(){
                         }
 
                         StrToDouble = stod(value);
-                        matrixA[11][k-1] = StrToDouble;
+                        matrixA[n-1][k-1] = StrToDouble;
                     }                 
                 }
 
-                cout << endl << "______________________________________________________________________________________________\n\t\t\t\t\tImpressão da matriz A" << endl << endl;
+                cout << endl << "______________________________________________________________________________________________\n\t\t\t\t\tImpressão da matriz " << i << endl << endl;
 
-                for(int line = 0; line < 12; line++){
-                    for(int column = 0; column < 12; column++){
+                for(int line = 0; line < n; line++){
+                    for(int column = 0; column < n; column++){
                         cout << fixed << setprecision(2) << matrixA[line][column] << "\t";
                     }
                     cout << endl;
                 } 
 
-                MatrixInversion(matrixA, 12, matrixInv);
+                cout << endl << "\n\t\t\tImpressão da matriz inversa da matriz " << i << endl << endl;
 
-                cout << endl << "\n\t\t\tImpressão da matriz inversa da matriz A" << endl << endl;
-
-                for(int i = 0; i < 12; i++){
-                    for(int j = 0; j < 12; j++){
-                        cout << matrixInv[i][j] << "\t";
-                    }
-                    cout << endl;
-                }                          
+                calculateInverse(matrixA, n);                         
             }
         }
     }

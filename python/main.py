@@ -7,6 +7,7 @@ start_time = time.time()
 x = pd.read_excel(r"FECHAMENTO_MAIS__NEGOCIADAS_5minutos.xls")
 matrix = np.zeros((12,12), dtype = np.float64)
 i = 0
+count = 0
 
 while(i+12 < 6200):
     matrix[0:12, 0] = round(x["ITSA4"][i:i+12], 2)
@@ -22,13 +23,20 @@ while(i+12 < 6200):
     matrix[0:12, 10] = round(x["VALE5"][i:i+12], 2)
     matrix[0:12, 11] = round(x["ABEV3"][i:i+12], 2)
 
-    matrix_inv = np.linalg.inv(matrix)
-
-    print(matrix)
-    print("\n======================================================================\n")
-    print(matrix_inv)
-    print('\n\n')
+    if(np.linalg.det(matrix) != 0):
+        matrix_inv = np.linalg.inv(matrix)
+        print(matrix)
+        print("\n======================================================================\n")
+        print(matrix_inv)
+        print('\n\n')
+    elif(np.linalg.det(matrix) == 0):
+        print(matrix)
+        print("\n======================================================================\n")
+        print("A matriz não possui inversa.")
+        cout += 1
+        print('\n\n')
 
     i += 1
 
 print("--- %s seconds ---" % (time.time() - start_time))
+print("Número de matrizes que não possuem inversa: " + str(count))
