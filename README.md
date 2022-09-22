@@ -36,13 +36,13 @@ Inicialmente, foi criada uma variável que recebe a leitura da planilha, uma out
 
 Em C++, para a resolução do problema, foram usadas apenas bibliotecas padrões do C++ para leitura do arquivo.
 
-O cálculo completo foi feito de forma manual e braçal, utilizando o <strong><i>método recursivo de solução analítica</i></strong>, e sem a utilização de biblioteca de terceiros onde foram criadas as funções <code>GetMinor()</code>, <code>CalcDeterminant()</code> e <code>MatrixInversion()</code> para calcular a matriz inversa da matriz que o programa está executando naquele momento.
+O cálculo completo foi feito de forma manual, utilizando o <strong><i>método de Gauss-Jordan</i></strong>, e sem a utilização de biblioteca de terceiros onde foi criada apenas uma função, chamada de <code>calculateInverse()</i> para calcular a matriz inversa da matriz que o programa está executando naquele momento.
 
 <strong>Observação</strong>: Devido a dificuldade que a linguagem propõe, os dados do arquivo <code>.xls</code> foram passados para um arquivo <code>.txt</code> para ser feita a leitura de forma mais fácil e correta.
 
 ## Conclusão
 
-Comparando as duas linguagem escolhidas, podemos dizer que Python ganhou disparadamente, por sua facilidade e velocidade compara a C++ nesse caso. Em questão de linhas de código, Python ficou com 34 linhas e C++ com 273 linhas, e em questão de tempo, para Python executar todas as 6187 matrizes, gastou em média 24 segundos e para executar uma matriz, C++ gastou 295 segundos, ou seja, fazendo um cálculo básico de tempo e levando em conta a primeira matriz, C++ gastaria cerca de 505 horas ou 21 dias para executar todas as 6187 matrizes.
+Comparando as duas linguagem escolhidas, podemos dizer que Python ganhou disparadamente, por sua facilidade e velocidade compara a C++ nesse caso. Em questão de linhas de código, Python ficou com 42 linhas e C++ com 230 linhas, e em questão de tempo, para Python executar todas as 6187 matrizes, gastou em média 24 segundos e para executar uma matriz, C++ gastou 4.26 segundos, ou seja, C++ cumpriu o esperado de ser uma linguagem rápida e de alta confiança, com o programador podendo ver tudo o que está acontecendo, diferente de Python que não é possível ver o que a função usada para calcular a matriz inversa faz.
 
 ## Compilação e Execução em C++
 
