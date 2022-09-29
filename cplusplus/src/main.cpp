@@ -134,7 +134,7 @@ int main(){
 
         // Looping começa aqui
 
-        for(int i = 0; i < 6187; i++){ // Quantidade de matrizes que irá calcular - 6187
+        for(int i = 0; i < 30; i++){ // Quantidade de matrizes que irá calcular - 6187
             getline(file, values);
             stringstream check1(values);
 
